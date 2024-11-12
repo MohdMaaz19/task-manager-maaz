@@ -1,9 +1,12 @@
 "use strict";
 import { Model } from "sequelize";
+import Task from "./Task";
 export default (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // define association here
+        User.hasMany(models.Task,{
+            foreignKey:userId
+        })
     }
   }
 
