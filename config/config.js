@@ -1,4 +1,6 @@
-import { config } from "dotenv"
+import dotenv  from "dotenv"
+
+dotenv.config();
 
 export default {
   "development": {
