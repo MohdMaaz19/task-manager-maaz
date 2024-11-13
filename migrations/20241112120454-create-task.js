@@ -1,4 +1,5 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 export async function up(queryInterface, Sequelize) {
   await queryInterface.createTable('Tasks', {
@@ -27,6 +28,16 @@ export async function up(queryInterface, Sequelize) {
     status: {
       type: Sequelize.ENUM("pending", "completed"),
       allowNull: false
+    },
+    userId: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references:{
+        model:"Users",
+        key: "id",
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
     createdAt: {
       allowNull: false,

@@ -1,12 +1,10 @@
-"use strict";
-import { Model } from "sequelize";
-import Task from "./Task";
-export default (sequelize, DataTypes) => {
+// models/User.js
+import { Model, DataTypes } from "sequelize";
+
+export default (sequelize) => {
   class User extends Model {
     static associate(models) {
-        User.hasMany(models.Task,{
-            foreignKey:userId
-        })
+      User.hasMany(models.Task, { foreignKey: "userId" });
     }
   }
 
@@ -18,20 +16,16 @@ export default (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-
       username: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
       },
-
       email: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
-        
       },
-
       password: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -40,8 +34,10 @@ export default (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "User",
+      tableName: "Users", // Explicitly set the table name to "Users"
       timestamps: true,
     }
   );
+
   return User;
 };

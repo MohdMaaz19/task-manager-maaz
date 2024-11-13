@@ -1,7 +1,8 @@
-import { Sequelize, DataTypes } from "sequelize";
+import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
-
-import config from "../config/config";
+import config from "../config/config.js";
+import UserModel from "./User.js";  // Import User model
+import TaskModel from "./Task.js";  // Import Task model
 
 dotenv.config();
 
@@ -19,23 +20,27 @@ const sequelize = new Sequelize(
   }
 );
 
-// Dynamically load models
-// readdirSync(__dirname)
-//   .filter(file => file.indexOf('.') !== 0 && file.slice(-3) === '.js')
-//   .forEach(file => {
-//     const model = require(join(__dirname, file))(sequelize, DataTypes);
-//     db[model.name] = model;
-//   });
+// Initialize models with sequelize instance
+const User = UserModel(sequelize, Sequelize.DataTypes);
+const Task = TaskModel(sequelize, Sequelize.DataTypes);
 
-// Associate models if they have the 'associate' method
-// Object.keys(db).forEach(modelName => {
-//   if (db[modelName].associate) {
-//     db[modelName].associate(db);
-//   }
-// });
+const db = {
+  sequelize,
+  Sequelize,
+  User,
+  Task,
+};
 
-const db = {}
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+// Define associations
+db.User.hasMany(db.Task, { foreignKey: 'userId' });
+db.Task.belongsTo(db.User, { foreignKey: 'userId' });
+
+sequelize.authenticate()
+  .then(() => {
+    console.log('Database connection established successfully.');
+  })
+  .catch((err) => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 export default db;
