@@ -52,6 +52,7 @@ export default (sequelize, DataTypes) => {
       sequelize,
       modelName: "Task",
       timestamps: true,
+      paranoid: true,
     }
   );
 

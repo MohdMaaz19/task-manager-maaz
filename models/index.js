@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
 import config from "../config/config.js";
-import UserModel from "./User.js";  // Import User model
-import TaskModel from "./Task.js";  // Import Task model
+import UserModel from "./User.js"; // Import User model
+import TaskModel from "./Task.js"; // Import Task model
 
 dotenv.config();
 
@@ -32,15 +32,17 @@ const db = {
 };
 
 // Define associations
-db.User.hasMany(db.Task, { foreignKey: 'userId' });
-db.Task.belongsTo(db.User, { foreignKey: 'userId' });
+db.User.hasMany(db.Task, { foreignKey: "userId" });
+db.Task.belongsTo(db.User, { foreignKey: "userId" });
 
-sequelize.authenticate()
+// Synchronize models with the database
+sequelize
+  .sync({ alter: true }) // alter: true will update tables to match models without dropping data
   .then(() => {
-    console.log('Database connection established successfully.');
+    console.log("All models were synchronized successfully.");
   })
   .catch((err) => {
-    console.error('Unable to connect to the database:', err);
+    console.error("Error syncing models with database:", err);
   });
 
 export default db;
