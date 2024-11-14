@@ -2,7 +2,8 @@ import db from "../models/index.js";
 import { Op } from "sequelize";
 
 export const getTasksForUser = async (userId, filters) => {
-  const { priority, status, dueDateFrom, dueDateTo, sortBy } = filters;
+  const { priority, status, dueDateFrom, dueDateTo, sortBy, page, limit } =
+    filters;
 
   const where = { userId };
   if (priority) where.priority = priority;
@@ -20,7 +21,17 @@ export const getTasksForUser = async (userId, filters) => {
   else if (sortBy === "priorityAsc") order.push(["priority", "ASC"]);
   else if (sortBy === "priorityDesc") order.push(["priority", "DESC"]);
 
-  return await db.Task.findAll({ where, order });
+  // Calculate the pagination parameters
+  const pageNumber = page ? parseInt(page) : 1; // Default to page 1
+  const pageSize = limit ? parseInt(limit) : 10; // Default to 10 tasks per page
+  const offset = (pageNumber - 1) * pageSize;
+
+  return await db.Task.findAndCountAll({
+    where,
+    order,
+    limit: pageSize,
+    offset: offset,
+  });
 };
 
 export const getTaskByIdForUser = async (taskId, userId) => {
