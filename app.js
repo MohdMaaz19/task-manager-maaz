@@ -1,16 +1,22 @@
 import express from "express";
+
 import userRoutes from "./routes/userRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
+import errorHandlingMiddleware from "./middleware/errorHandlingMiddleware.js";
 
 const app = express();
 
-// Middleware to parse JSON request bodies
 app.use(express.json());
 
-// Use the user routes
+// User routes
 app.use("/", userRoutes);
 
-// Start the server and listen on a port
-const PORT = process.env.PORT || 3000;  // Make sure PORT is set to a valid value
+//Tasks routes
+app.use("/tasks", taskRoutes);
+
+app.use(errorHandlingMiddleware);
+
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
