@@ -3,6 +3,7 @@ import express from "express";
 import userRoutes from "./routes/userRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import errorHandlingMiddleware from "./middleware/errorHandlingMiddleware.js";
+import './services/cronJobs.js'
 
 const app = express();
 

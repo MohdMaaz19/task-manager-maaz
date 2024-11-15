@@ -1,12 +1,12 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
 import config from "../config/config.js";
-import UserModel from "./User.js"; // Import User model
-import TaskModel from "./Task.js"; // Import Task model
+import UserModel from "./User.js"; 
+import TaskModel from "./Task.js"; 
 
 dotenv.config();
 
-const env = process.env.NODE_ENV || "development";
+const env = "development";
 const dbConfig = config[env];
 
 const sequelize = new Sequelize(
