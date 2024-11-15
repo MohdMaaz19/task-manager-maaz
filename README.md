@@ -1,6 +1,6 @@
 # Personal Task Management API
 
-This is a personal task management application API that allows users to create, read, update, and delete tasks. It also supports filtering, sorting of data.This application also has authentication and authorization, so that users with right permissions can see their tasks.
+This is a personal task management application API that allows users to create, read, update, and delete tasks. It also supports filtering, sorting of data.This application also has authentication and authorization using JWT, so that users with right permissions can see their tasks.
 
 # Features
 
